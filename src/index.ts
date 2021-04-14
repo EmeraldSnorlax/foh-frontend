@@ -1,25 +1,27 @@
-import App from "./App.svelte";
-import "./styles/Tailwind.css";
+/* eslint-disable no-tabs */
+import App from './App.svelte';
+import './styles/Tailwind.css';
 
-export const domain = 'http://localhost:6060'
+export const domain = 'http://localhost:6060';
 
-var app = new App({
-	target: document.body,
+const app = new App({
+  target: document.body,
 });
 
 export default app;
 
 if (import.meta?.hot) {
-	// Hot Module Replacement (HMR) - Remove this snippet to remove HMR.
-	// Learn more: https://www.snowpack.dev/#hot-module-replacement
-	import.meta.hot.accept();
-	import.meta.hot.dispose(() => {
-		app.$destroy();
-	});
+  // Hot Module Replacement (HMR) - Remove this snippet to remove HMR.
+  // Learn more: https://www.snowpack.dev/#hot-module-replacement
+  import.meta.hot.accept();
+  import.meta.hot.dispose(() => {
+    app.$destroy();
+  });
 }
 
-//Type override for Import/env so TS doesn't complain
+// Type override for Import/env so TS doesn't complain
 declare global {
+	// eslint-disable-next-line no-unused-vars
 	interface ImportMeta {
 		hot: {
 			accept: Function;

@@ -1,4 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import { writable } from 'svelte/store';
 
-export const directory = writable(['hello', 'world'])
-
+export const directory = writable([] as string[]);
