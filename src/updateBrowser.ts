@@ -4,7 +4,7 @@ import getDirContent from './getDirContent';
 import * as icon from './icon';
 import { directory } from './stores';
 
-function update(err: Function, cb?: Function): void {
+function update(cb: Function): void {
   getDirContent(get(directory), (contents: string[]) => {
     let directoryContent: icon.FileItem[];
 
@@ -20,10 +20,10 @@ function update(err: Function, cb?: Function): void {
           iconPath: icon.resolve(file),
         },
       ];
-      if (cb) cb();
+      cb();
     }),
-    (e: string) => {
-      err(e);
+    (err: string) => {
+      console.log(err);
     };
   });
 }
