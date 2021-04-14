@@ -9,6 +9,8 @@
 	import getDirContent from "./getDirContent";
 	import { directory } from "./stores";
 	import App from "./App.svelte";
+	import { domain } from "./index";
+	import getDirectoryString from "./getDirString";
 	let directoryContent: icon.FileItem[] = [];
 
 	function update(): void {
@@ -67,9 +69,8 @@
 		<button
 			class="flex items-center p-4 bg-yellow-300 w-full"
 			on:click={() => {
-				$directory = get(directory).slice(0, get(directory).length - 1)
-				update()
-
+				$directory = get(directory).slice(0, get(directory).length - 1);
+				update();
 			}}
 		>
 			<svg
@@ -89,6 +90,10 @@
 						if (item.name.endsWith("/")) {
 							directory.set([...$directory, item.name]);
 							update();
+						} else {
+							window.open(
+								`${domain}${getDirectoryString([...$directory])}/${item.name}`
+							);
 						}
 					}}
 					class="border-b-2 flex md:inline items-center p-4 min-h-6  border-gray-600 md:border-0 md:text-center text-center justify-start md:rounded-lg w-full hover:bg-green-50 bg-gray-200 cursor-pointer transition-all hover:shadow-md"
