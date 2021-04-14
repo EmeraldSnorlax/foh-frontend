@@ -1,6 +1,6 @@
 <script lang="typescript">
 	import { directory } from './stores';
-	import directoryString from "./dirString";
+	import directoryString from "./getDirString";
 </script>
 
 <nav
