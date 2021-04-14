@@ -1,6 +1,8 @@
 <script lang="typescript">
 	import { directory } from './stores';
+	import { mdiFolder } from '@mdi/js';
 	import directoryString from "./getDirString";
+
 </script>
 
 <nav
@@ -12,11 +14,7 @@
 			xmlns="http://www.w3.org/2000/svg"
 			viewBox="0 0 24 24"
 			width="24px"
-			fill="#000000"
-			><path d="M0 0h24v24H0V0z" fill="none" /><path
-				d="M10 4H2v16h20V6H12l-2-2z"
-			/></svg
-		>
+			><path d="{mdiFolder}"/></svg>
 		<h2 class="font-sans">{directoryString($directory)}</h2>
 	</div>
 </nav>
