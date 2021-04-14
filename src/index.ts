@@ -1,6 +1,8 @@
 import App from "./App.svelte";
 import "./styles/Tailwind.css";
 
+export const domain = 'http://localhost:6060/'
+
 var app = new App({
 	target: document.body,
 });
