@@ -40,18 +40,18 @@
 </script>
 
 {#if !directoryContent[0]}
-	<h2 class="md:text-left md:ml-4 my-4 text-center motion-safe:animate-pulse">
+	<h2 class="md:text-left md:ml-4 my-4 text-center motion-safe:animate-pulse dark:text-white">
 		Fetching content...
 	</h2>
 
 	<!-- Skeleton Loader -->
 	<ul
-		class="md:grid md:grid-cols-3 lg:grid-cols-5 md:gap-4 md:m-4 motion-safe:animate-pulse"
+		class="md:grid md:grid-cols-3 lg:grid-cols-5 md:gap-4 md:m-4 motion-safe:animate-pulse dark:text-white"
 	>
 		{#each [...Array(7).keys()] as i}
 			<li class="h-12">
 				<button
-					class="border-b-2 h-full flex items-center border-gray-600 md:border-0 md:text-center text-center justify-center md:rounded-lg w-full hover:bg-green-50 bg-gray-200 cursor-wait transition-all hover:shadow-md"
+					class="border-b-2 h-full flex items-center dark:bg-gray-800 border-gray-600 md:border-0 md:text-center text-center justify-center md:rounded-lg w-full hover:bg-green-50 bg-gray-200 cursor-wait transition-all hover:shadow-md"
 				>
 					<svg
 						class="fill-current mr-2"
@@ -67,7 +67,7 @@
 	<!-- Add a go up button if we are not in the root -->
 	{#if $directory.length != 0}
 		<button
-			class="flex items-center p-4 bg-yellow-300 w-full"
+			class="flex items-center p-4 bg-yellow-300 dark:bg-blue-600 dark:text-white w-full"
 			on:click={() => {
 				$directory = get(directory).slice(0, get(directory).length - 1);
 				update();
@@ -96,7 +96,7 @@
 							);
 						}
 					}}
-					class="border-b-2 flex md:inline items-center p-4 min-h-6  border-gray-600 md:border-0 md:text-center text-center justify-start md:rounded-lg w-full hover:bg-green-50 bg-gray-200 cursor-pointer transition-all hover:shadow-md"
+					class="border-b-2 flex md:inline items-center p-4 min-h-6  border-gray-600 md:border-0 md:text-center text-center justify-start md:rounded-lg w-full hover:bg-green-50 bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white cursor-pointer transition-all hover:shadow-md"
 				>
 					<div class="md:flex md:justify-center md:items-center">
 						<svg
