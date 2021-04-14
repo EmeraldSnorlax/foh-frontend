@@ -2,13 +2,13 @@
 	import { onMount } from "svelte";
 	import { each } from "svelte/internal";
 
-	import * as icon from './icon';
+	import { mdiDotsHorizontal } from "@mdi/js";
+	import * as icon from "./icon";
 
 	import getDirContent from "./getDirContent";
 	import { directory } from "./stores";
+	import App from "./App.svelte";
 	let directoryContent: icon.FileItem[] = [];
-
-
 
 	function update(): void {
 		directoryContent = [];
@@ -37,34 +37,53 @@
 </script>
 
 {#if !directoryContent[0]}
-	<h2 class="md:text-left md:ml-4 mt-4 text-center motion-safe:animate-pulse">
+	<h2 class="md:text-left md:ml-4 my-4 text-center motion-safe:animate-pulse">
 		Fetching content...
 	</h2>
 
 	<!-- Skeleton Loader -->
-	<div class="flex justify-center cursor-wait">
-		<ul class="w-full" aria-hidden="true">
-			{#each [...Array(8).keys()] as i}
-				<li
-					class="bg-gray-200 motion-safe:animate-pulse h-8 rounded-lg m-3 md:w-3/4 w-38"
-				/>
-			{/each}
-		</ul>
-	</div>
+	<ul
+		class="md:grid md:grid-cols-3 lg:grid-cols-5 md:gap-4 md:m-4 motion-safe:animate-pulse"
+	>
+		{#each [...Array(7).keys()] as i}
+			<li class="h-12">
+				<button
+					class="border-b-2 h-full flex items-center border-gray-600 md:border-0 md:text-center text-center justify-center md:rounded-lg w-full hover:bg-green-50 bg-gray-200 cursor-wait transition-all hover:shadow-md"
+				>
+					<svg
+						class="fill-current mr-2"
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 24 24"
+						width="24px"><path d={mdiDotsHorizontal} /></svg
+					>
+				</button>
+			</li>
+		{/each}
+	</ul>
 {:else}
-	<ul>
+	<ul class="md:grid md:grid-cols-3 lg:grid-cols-5 md:gap-4 md:m-4">
 		{#each directoryContent as item, i}
-			<li
-				class="md:text-center text-center flex items-center h-8 rounded-lg p-2 m-4 md:w-3/4 w-38 hover:bg-green-50 cursor-pointer transition-all hover:shadow-md"
-			>
-			<svg
-			class="fill-current mr-2"
-			xmlns="http://www.w3.org/2000/svg"
-			viewBox="0 0 24 24"
-			width="24px"
-			><path d="{item.iconPath}"/></svg>
+			<li>
+				<button
+					on:click={() => { 
+						if (item.name.endsWith('/')) {
+							directory.set([...$directory, item.name])
+							update();
+						}
+						}}
+					class="border-b-2 flex md:inline items-center p-4 min-h-6  border-gray-600 md:border-0 md:text-center text-center justify-start md:rounded-lg w-full hover:bg-green-50 bg-gray-200 cursor-pointer transition-all hover:shadow-md"
+				>
+					<div class="md:flex md:justify-center md:items-center">
+						<svg
+							class="fill-current mr-2"
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							width="24px"><path d={item.iconPath} /></svg
+						>
+					</div>
 
-				<a>{item.name}</a>
+					<p>{item.name}</p>
+				</button>
 			</li>
 		{/each}
 	</ul>

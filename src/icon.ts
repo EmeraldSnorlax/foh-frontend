@@ -1,4 +1,6 @@
-import { mdiText, mdiFolder, mdiFileQuestion, mdiFileVideo, mdiFileImage } from '@mdi/js';
+import {
+  mdiText, mdiFolder, mdiFileQuestion, mdiFileVideo, mdiFileImage,
+} from '@mdi/js';
 
 export interface FileItem {
   name: string;
