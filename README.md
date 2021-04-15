@@ -5,3 +5,22 @@
 > ✨ Community template for Snowpack + Svelte + Typescript + TailwindCSS
 
 ---
+
+> We use Yarn, not npm!
+
+
+Development
+---
+```
+yarn install
+yarn start
+```
+
+Building for prod:
+---
+```
+yarn install
+yarn build
+```
+
+Resulting files are in `./build`.
