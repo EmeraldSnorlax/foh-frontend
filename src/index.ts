@@ -1,4 +1,3 @@
-/* eslint-disable no-tabs */
 import App from './App.svelte';
 import './styles/Tailwind.css';
 
@@ -21,15 +20,15 @@ if (import.meta?.hot) {
 
 // Type override for Import/env so TS doesn't complain
 declare global {
-	// eslint-disable-next-line no-unused-vars
-	interface ImportMeta {
-		hot: {
-			accept: Function;
-			dispose: Function;
-		};
-		env: {
-			MODE: string;
-			SNOWPACK_PUBLIC_API_URL: string;
-		};
-	}
+  // eslint-disable-next-line no-unused-vars
+  interface ImportMeta {
+    hot: {
+      accept: Function;
+      dispose: Function;
+    };
+    env: {
+      MODE: string;
+      SNOWPACK_PUBLIC_API_URL: string;
+    };
+  }
 }
