@@ -7,7 +7,7 @@
 	import * as icon from "./icon";
 
 	import getDirContent from "./getDirContent";
-	import { directory } from "./stores";
+	import { directory, view } from "./stores";
 	import App from "./App.svelte";
 	import { domain } from "./index";
 	import getDirectoryString from "./getDirString";
@@ -46,12 +46,12 @@
 
 	<!-- Skeleton Loader -->
 	<ul
-		class="md:grid md:grid-cols-3 lg:grid-cols-5 md:gap-4 md:m-4 motion-safe:animate-pulse dark:text-white"
+		class="{$view.style.container} motion-safe:animate-pulse dark:text-white"
 	>
 		{#each [...Array(7).keys()] as i}
 			<li class="h-12">
 				<button
-					class="border-b-2 h-full flex items-center dark:bg-gray-800 border-gray-600 md:border-0 md:text-center text-center justify-center md:rounded-lg w-full hover:bg-green-50 bg-gray-200 cursor-wait transition-all hover:shadow-md"
+					class="cursor-wait {$view.style.entry}"
 				>
 					<svg
 						class="fill-current mr-2"
@@ -82,7 +82,7 @@
 			<p>Go up</p>
 		</button>
 	{/if}
-	<ul class="md:grid md:grid-cols-3 lg:grid-cols-5 md:gap-4 md:m-4">
+	<ul class="{$view.style.container}">
 		{#each directoryContent as item, i}
 			<li>
 				<button
@@ -96,7 +96,7 @@
 							);
 						}
 					}}
-					class="border-b-2 flex md:inline items-center p-4 min-h-6  border-gray-600 md:border-0 md:text-center text-center justify-start md:rounded-lg w-full hover:bg-green-50 bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white cursor-pointer transition-all hover:shadow-md"
+					class="{$view.style.entry}"
 				>
 					<div class="md:flex md:justify-center md:items-center">
 						<svg
