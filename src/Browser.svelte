@@ -13,25 +13,35 @@
 	import getDirectoryString from "./getDirString";
 	let directoryContent: icon.FileItem[] = [];
 
+	let fetchSuccessful = true;
+	let errMsg: string;
+
 	function update(): void {
 		directoryContent = [];
-		getDirContent($directory, (contents: string[]) => {
-			contents.forEach((file) => {
-				let isFolder = file.endsWith("/");
+		getDirContent(
+			$directory,
+			(contents: string[]) => {
+				contents.forEach((file) => {
+					let isFolder = file.endsWith("/");
 
-				directoryContent = [
-					...directoryContent,
-					{
-						name: file,
-						isFolder: isFolder,
-						iconPath: icon.resolve(file),
-					},
-				];
-			}),
-				(err: string) => {
-					console.log(err);
-				};
-		});
+					directoryContent = [
+						...directoryContent,
+						{
+							name: file,
+							isFolder: isFolder,
+							iconPath: icon.resolve(file),
+						},
+					];
+				});
+				fetchSuccessful = true;
+			},
+			(err: string) => {
+				if (err) {
+					fetchSuccessful = false;
+					errMsg = err;
+				}
+			}
+		);
 	}
 
 	onMount(() => {
@@ -40,32 +50,8 @@
 </script>
 
 {#if !directoryContent[0]}
-	<h2 class="md:text-left md:ml-4 my-4 text-center motion-safe:animate-pulse dark:text-white">
-		Fetching content...
-	</h2>
-
-	<!-- Skeleton Loader -->
-	<ul
-		class="{$view.style.container} motion-safe:animate-pulse dark:text-white"
-	>
-		{#each [...Array(7).keys()] as i}
-			<li class="h-12">
-				<button
-					class="cursor-wait {$view.style.entry}"
-				>
-					<svg
-						class="fill-current mr-2"
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						width="24px"><path d={mdiDotsHorizontal} /></svg
-					>
-				</button>
-			</li>
-		{/each}
-	</ul>
-{:else}
 	<!-- Add a go up button if we are not in the root -->
-	{#if $directory.length != 0}
+	{#if !fetchSuccessful}
 		<button
 			class="flex items-center p-4 bg-yellow-300 dark:bg-blue-600 dark:text-white w-full"
 			on:click={() => {
@@ -81,8 +67,55 @@
 			>
 			<p>Go up</p>
 		</button>
+		<div class="flex items-center justify-center m-4 text-red-500">
+			<p>{errMsg}</p>
+		</div>
+	{:else}
+		<h2
+			class="md:text-left md:ml-4 my-4 text-center motion-safe:animate-pulse dark:text-white"
+		>
+			Fetching content...
+		</h2>
+
+		<!-- Skeleton Loader -->
+		<ul
+			class="{$view.style.container} motion-safe:animate-pulse dark:text-white"
+		>
+			{#each [...Array(7).keys()] as i}
+				<li class="h-12">
+					<button class="cursor-wait {$view.style.entry}">
+						<svg
+							class="fill-current mr-2"
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							width="24px"><path d={mdiDotsHorizontal} /></svg
+						>
+					</button>
+				</li>
+			{/each}
+		</ul>
 	{/if}
-	<ul class="{$view.style.container}">
+{:else}
+	{#if $directory.length != 0}
+		<button
+			class="flex items-center p-4 bg-yellow-300 dark:bg-blue-600 dark:text-white w-full"
+			on:click={() => {
+				$directory = get(directory).slice(0, get(directory).length - 1);
+				errMsg = "";
+				update();
+			}}
+		>
+			<svg
+				class="fill-current mr-2"
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 24 24"
+				width="24px"><path d={mdiChevronDoubleUp} /></svg
+			>
+			<p>Go up</p>
+		</button>
+	{/if}
+
+	<ul class={$view.style.container}>
 		{#each directoryContent as item, i}
 			<li>
 				<button
@@ -96,7 +129,7 @@
 							);
 						}
 					}}
-					class="{$view.style.entry}"
+					class={$view.style.entry}
 				>
 					<div class="md:flex md:justify-center md:items-center">
 						<svg

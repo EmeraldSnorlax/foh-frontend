@@ -4,7 +4,7 @@ import getDirectoryString from './getDirString';
 export default function getDirContent(
   directory: string[],
   success: Function,
-  failure?: Function,
+  failure: Function,
 ): void {
   fetch(`${domain}${getDirectoryString(directory)}`)
     .then((res) => {
@@ -19,9 +19,10 @@ export default function getDirContent(
         .split('\n');
       contents.splice(contents.length - 2, 1);
       contents = contents.filter((e) => e);
-      if (success) success(contents);
+      if (contents.length === 0) throw new Error('This folder is empty or doesn\'t exist, or you aren\'t allowed to view it!');
+      success(contents);
     })
     .catch((err) => {
-      if (failure) failure(err);
+      failure(err);
     });
 }
