@@ -25,6 +25,7 @@
 
 <div>
 	<button
+		aria-label="Switch between grid and list view"
 		class="hidden md:inline-block"
 		on:click={() => {
 			toggleView();
@@ -39,6 +40,7 @@
 	</button>
 
 	<button
+	aria-label="Toggle light and dark theme"
 		on:click={() => {
 			theme.toggle();
 		}}
