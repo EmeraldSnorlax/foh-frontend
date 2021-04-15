@@ -3,7 +3,7 @@
 	import { each } from "svelte/internal";
 	import { get } from "svelte/store";
 
-	import { mdiDotsHorizontal, mdiChevronDoubleUp } from "@mdi/js";
+	import { mdiDotsHorizontal, mdiChevronDoubleUp, mdiReload } from "@mdi/js";
 	import * as icon from "./icon";
 
 	import getDirContent from "./getDirContent";
@@ -50,12 +50,12 @@
 </script>
 
 {#if !directoryContent[0]}
-	<!-- Add a go up button if we are not in the root -->
 	{#if !fetchSuccessful}
 		<button
 			class="flex items-center p-4 bg-yellow-300 dark:bg-blue-600 dark:text-white w-full"
 			on:click={() => {
 				$directory = get(directory).slice(0, get(directory).length - 1);
+				errMsg = '';
 				update();
 			}}
 		>
@@ -67,7 +67,7 @@
 			>
 			<p>Go up</p>
 		</button>
-		<div class="flex items-center justify-center m-4 text-red-500">
+		<div class="text-center m-4 text-red-500">
 			<p>{errMsg}</p>
 		</div>
 	{:else}
